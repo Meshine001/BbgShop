@@ -4,4 +4,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!-- chat -->
+    <dimen name="margin_chat_top">5.0dip</dimen>
+    <dimen name="base_scrollview_top_height">50.0dip</dimen>
+    <dimen name="historyscore_tb">10dp</dimen>
+    
+    <dimen name="order_name_text_size">20sp</dimen>
+    <dimen name="order_tel_text_size">18sp</dimen>
+    <dimen name="order_addr_text_size">15sp</dimen>
+    <dimen name="order_time_text_size">15sp</dimen>
+    <dimen name="order_status_text_size">20sp</dimen>
+    
 </resources>

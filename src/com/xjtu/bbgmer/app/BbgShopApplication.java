@@ -1,5 +1,7 @@
 package com.xjtu.bbgmer.app;
 
+import com.xjtu.bbgmer.fragment.MainTab01;
+
 import net.duohuo.dhroid.Dhroid;
 import net.duohuo.dhroid.dialog.DialogImpl;
 import net.duohuo.dhroid.dialog.IDialog;
@@ -14,11 +16,15 @@ public class BbgShopApplication extends Application{
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		
+		
+		
 		Dhroid.init(this);
 
 		IocContainer.getShare().bind(DialogImpl.class).to(IDialog.class)
 				// 这是单例
 				.scope(InstanceScope.SCOPE_SINGLETON);
 		mInstance = this;
+		
 	}
 }
