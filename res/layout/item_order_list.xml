@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/id_order_item_tv_client_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="任忠锋"
+                android:textSize="@dimen/order_name_text_size" />
+
+            <TextView
+                android:id="@+id/id_order_item_tv_client_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="17791947787"
+                android:textSize="@dimen/order_tel_text_size" />
+
+            <TextView
+                android:id="@+id/id_order_item_tv_order_addr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="仲英书院东2楼411"
+                android:textSize="@dimen/order_addr_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/id_order_item_tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="03-04 22:06"
+                android:textSize="@dimen/order_time_text_size" />
+
+            <TextView
+                android:id="@+id/id_order_item_tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="未处理"
+                android:textSize="@dimen/order_status_text_size" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_bg" />
+
+</LinearLayout>

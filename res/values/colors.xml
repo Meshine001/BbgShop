@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 白色 -->
+    <color name="white">#ffffff</color>
+    <!-- 黑色 -->
+    <color name="black">#000000</color>
+    <!-- 蓝色 -->
+    <color name="bule">#0000ff</color>
+    <!-- index 页面 -->
+    <color name="index_bg">#312637</color>
+    <color name="index_text">#524E5D</color>
+    <!-- chat -->
+    <color name="base_bg">#f4f6f6</color>
+    
+    <color name="main_bottom">#F8F8F8</color>
+	<color name="index_top_bg">#75C0C5</color>
+	
+	<color name="message_record_act_bg">#F6F0E0</color>
+	
+	<color name="groups_title_bg">#EAE2CF</color>
+	<color name="main_bottom_gray">#80312637</color>
+	<color name="message_item_time_txt">#A6A6A6</color>
+	<color name="message_item_content_txt">#7D7D7D</color>
+	<color name="chat_add_bottom_bg">#CECECE</color>
+	<color name="group_act_groupname">#3D4245</color>
+
+	<color name="fade_green">#E7F8FF</color>
+	<color name="bg">#E3E3E3</color>
+	<color name="line_bg">#E6E6E6</color>
+	<color name="app_style">#06AF00</color>
+    <color name="bg_window">#ffe5e5e5</color>
+    <color name="bg_page">#ffebebeb</color>
+    <color name="bg_tab_pressed">#6633b5e5</color>
+    <color name="bg_tab_pressed2">#ff3898ff</color>
+    <color name="txt_title">#ff333333</color>
+    <color name="txt_small">#ff7a7a7a</color>
+    <color name="txt_big">#ff717171</color>
+    <color name="item_divider">#ffd7d7d7</color>
+    <color name="detail_screen_bg">#ffadadad</color>
+    <color name="progress">#ff0294f0</color>
+    <color name="menu_bg_normal">#fff0f1f3</color>
+    <color name="menu_bg_press">#ffcecece</color>
+    <color name="bg_gray">#fff0efe4</color>
+    <color name="question_type">#ff404040</color>
+    <color name="blank">#ff000000</color>
+    <color name="text_green">#ff4bc94b</color>
+    <color name="text_gray">#ff666666</color>
+    <color name="text_gray2">#ff596368</color>
+    <color name="text_blank">#ff4b4b4b</color>
+    <color name="text_blank2">#ff333333</color>
+    <color name="text_blue">#ff3cc9b9</color>
+    <color name="line_gray">#ffd8d8d8</color>
+    <color name="text_yellow">#ffffd800</color>
+    <color name="red">#ffff4b4b</color>
+    <color name="get_order_text_key">#ff4b4b4b</color>
+    <color name="get_order_text_value">#ff4bc94b</color>
+    <color name="get_order_text_gray">#ff9a9a9a</color>
+    <color name="bg_translucence">#40000000</color>
+    <color name="bt_gray">#ffbdbdbd</color>
+    <color name="navigation_text_color">#ff484848</color>
+    <color name="text_blank3">#ff596368</color>
+    <color name="text_blue2">#ff2baec4</color>
+    <color name="gray2">#ff999999</color>
+    <color name="text_green2">#ff6cbc4e</color>
+</resources>
