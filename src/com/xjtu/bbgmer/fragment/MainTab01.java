@@ -1,11 +1,17 @@
 package com.xjtu.bbgmer.fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.duohuo.dhroid.Const;
 import net.duohuo.dhroid.ioc.InjectUtil;
 import net.duohuo.dhroid.ioc.annotation.InjectView;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.view.PullToRefreshBase.OnRefreshListener;
 import net.duohuo.dhroid.view.PullToRefreshListView;
 import android.annotation.SuppressLint;
@@ -32,7 +38,9 @@ import com.xjtu.bbgmer.R;
 import com.xjtu.bbgmer.activity.OrderDetailsActivity;
 import com.xjtu.bbgmer.adapter.OrderListViewAdapter;
 import com.xjtu.bbgmer.adapter.OrderPagerViewAdapter;
+import com.xjtu.bbgmer.app.AppContext;
 import com.xjtu.bbgmer.bean.OrderBean;
+import com.xjtu.bbgmer.utils.MyProperUtil;
 
 /**
  * 订单页
@@ -221,6 +229,34 @@ public class MainTab01 extends Fragment {
 
 				break;
 			}
+		}
+		
+		/**
+		 * 获取分店列表
+		 */
+		public void getShopBranchList(){
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("sid", AppContext.sid);
+			String url = MyProperUtil.getProperties(getContext(),
+					"appConfigDebugHost.properties").getProperty("Host")
+					+ MyProperUtil.getProperties(getContext(), "appConfigDebug.properties")
+							.getProperty("get_shop_branch_list");
+			DhNet request = new DhNet(url, map);
+			request.doGet(new NetTask(getContext()) {
+				
+				@Override
+				public void doInUI(Response response, Integer transfer) {
+					System.out.println(response.jSON());
+					if(116 == JSONUtil.getInt(response.jSON(), "code")){
+						//获得成功
+						
+						
+					}else if(117 == JSONUtil.getInt(response.jSON(), "code")){
+						//获取失败
+						
+					}
+				}
+			});
 		}
 		
 		/**

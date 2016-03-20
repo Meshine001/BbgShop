@@ -5,13 +5,15 @@
     android:orientation="vertical" >
     <EditText android:id="@+id/id_login_username"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="zongdiandz"/>
     <EditText android:id="@+id/id_login_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="123456"/>
     <Button android:id="@+id/id_login_sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign Up"/>
+        android:text="Sign In"/>
 
 </LinearLayout>

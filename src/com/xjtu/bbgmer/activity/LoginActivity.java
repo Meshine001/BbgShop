@@ -19,6 +19,7 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,39 +28,41 @@ import android.widget.Toast;
 
 /**
  * 登录
- * @author Ming
+ * 
+ * @author Hyr
  *
  */
-public class LoginActivity extends BaseActivity{
-	@InjectView(id=R.id.id_login_username)
+public class LoginActivity extends BaseActivity {
+	@InjectView(id = R.id.id_login_username)
 	private EditText etUsername;
 	@InjectView(id = R.id.id_login_password)
 	private EditText etPassword;
-	@InjectView(id= R.id.id_login_sign_up,click = "onClickCallBack")
+	@InjectView(id = R.id.id_login_sign_up, click = "onClickCallBack")
 	private Button btnSignUp;
 	@Inject
 	CusPerference cusPerference;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 	}
-	
+
 	/**
 	 * 点击事件
+	 * 
 	 * @param view
 	 */
-	public void onClickCallBack(View view){
+	public void onClickCallBack(View view) {
 		switch (view.getId()) {
-		case R.id.id_login_sign_up:	
+		case R.id.id_login_sign_up:
 			if (isEmpty(etUsername.getText().toString().trim())
 					|| isEmpty(etPassword.getText().toString().trim())) {
 				Toast.makeText(this, "帐号或密码不能为空", Toast.LENGTH_SHORT).show();
 			} else {
-				signUp(etUsername.getText().toString().trim(),
-						etPassword.getText().toString().trim());
+				signIn(etUsername.getText().toString().trim(), etPassword
+						.getText().toString().trim());
 			}
 			break;
 
@@ -67,43 +70,110 @@ public class LoginActivity extends BaseActivity{
 			break;
 		}
 	}
-	public void doShopLoginIn(final String uid){
+
+	/**
+	 * 获取店铺状态
+	 * 
+	 * @param type
+	 *            0-总店，1-分店
+	 * @param sid
+	 *            店铺id
+	 */
+	public void getShopStatus(String type, String sid) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("type", type);
+		map.put("sid", sid);
+		String url = MyProperUtil.getProperties(this,
+				"appConfigDebugHost.properties").getProperty("Host")
+				+ MyProperUtil.getProperties(this, "appConfigDebug.properties")
+						.getProperty("get_shop_status");
+		DhNet request = new DhNet(url, map);
+		request.doGet(new NetTask(LoginActivity.this) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+
+				if ("24".equals(JSONUtil.getString(response.jSON(), "code"))) {
+					// 成功获取
+					AppContext.shopStatus = JSONUtil.getString(response.jSON(),
+							"data.status");
+					AppContext.reason = JSONUtil.getString(response.jSON(),
+							"data.reason");
+
+					// 跳转主界面
+					Intent intent = new Intent(LoginActivity.this,
+							MainActivity.class);
+					startActivity(intent);
+				} else if ("25".equals(JSONUtil.getString(response.jSON(),
+						"code"))) {
+					// 获取失败
+					Toast.makeText(LoginActivity.this,
+							JSONUtil.getString(response.jSON(), "message"),
+							Toast.LENGTH_SHORT).show();
+				}
+
+			}
+		});
+	}
+
+	/**
+	 * 获取商家身份信息
+	 * 
+	 * @param uid
+	 */
+	public void shopLogin(final String uid) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("uid", uid);
-		JSONObject json = new JSONObject(map);
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("data", json.toString());
 		String url = MyProperUtil.getProperties(this,
 				"appConfigDebugHost.properties").getProperty("Host")
 				+ MyProperUtil.getProperties(this, "appConfigDebug.properties")
 						.getProperty("shop_login");
-		DhNet request=new DhNet(url, params);
+		DhNet request = new DhNet(url, map);
 		request.doGet(new NetTask(LoginActivity.this) {
-			
+
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				// TODO Auto-generated method stub
-				if (AppContext.CODE_SHOP_SIGN_UP_SUCCESS.equals(JSONUtil.getString(response.jSON(), "code"))) {
+				if (AppContext.CODE_SHOP_SIGN_UP_SUCCESS.equals(JSONUtil
+						.getString(response.jSON(), "code"))) {
+					// Toast.makeText(LoginActivity.this, "商家登录成功",
+					// Toast.LENGTH_SHORT).show();
+					// System.out.println(response.jSON());
+					String sid = JSONUtil.getString(response.jSON(),
+							"data.sid");
+					AppContext.sid = sid;
+					String sbid = JSONUtil.getString(response.jSON(),
+							"data.sbid");
+					AppContext.sbid = sbid;
+					
+					AppContext.job = JSONUtil.getString(response.jSON(),
+							"data.job");
+					AppContext.editor = JSONUtil.getString(response.jSON(),
+							"data.editor");
+					
+					//分店用户
+					if("".equals(sbid))getShopStatus("1", sid);
+					else getShopStatus("0", sid);
+					
+
+				} else {
 					Toast.makeText(LoginActivity.this,
-							"商家登录成功",Toast.LENGTH_SHORT).show();	
-				}
-				else{
-					Toast.makeText(LoginActivity.this,
-							"您尚不属于任何店铺，马上申请开设自己的小店吧",Toast.LENGTH_SHORT).show();	
-	
+							"您尚不属于任何店铺，马上申请开设自己的小店吧", Toast.LENGTH_SHORT)
+							.show();
+
 				}
 			}
 		});
-		
-		
-		
+
 	}
+
 	/**
 	 * 登录
+	 * 
 	 * @param username
 	 * @param password
 	 */
-	public void signUp(final String username,final String password) {
+	public void signIn(final String username, final String password) {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("username", username);
@@ -118,35 +188,35 @@ public class LoginActivity extends BaseActivity{
 				+ MyProperUtil.getProperties(this, "appConfigDebug.properties")
 						.getProperty("login");
 		DhNet request = new DhNet(url, params);
-		System.out.println("开始登录.."+params);
+		System.out.println("开始登录.." + params);
 		request.doPost(new NetTask(LoginActivity.this) {
-			
+
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				// TODO Auto-generated method stub
 				System.out.println(response.jSON());
-				if (AppContext.CODE_SIGN_UP_SUCCESS.equals(JSONUtil.getString(response.jSON(), "code"))) {
+				if (AppContext.CODE_SIGN_UP_SUCCESS.equals(JSONUtil.getString(
+						response.jSON(), "code"))) {
 					String uid = JSONUtil.getString(response.jSON(), "data.id");
+					// String uid = "5111808";//TestData 总店店长
 					cusPerference.userName = username;
 					cusPerference.uid = uid;
 					cusPerference.password = password;
 					cusPerference.commit();
-					AppContext.uid=uid;
-				
-					if(AppContext.STATUS_OK.equals(JSONUtil.getString(response.jSON(), "data.status"))){
-					  
-						
-								
+					AppContext.uid = uid;
+					// System.out.println(uid);
+					// 状态正常
+					if (AppContext.STATUS_OK.equals(JSONUtil.getString(
+							response.jSON(), "data.status"))) {
+						shopLogin(uid);
 					}
-					}	
-				else if(AppContext.CODE_ACCOUNT_ERR.equals(JSONUtil.getString(response.jSON(), "code")))
-				{
-					Toast.makeText(LoginActivity.this,
-							"账号异常",Toast.LENGTH_SHORT).show();	
-				}
-				else{
-					Toast.makeText(LoginActivity.this,
-							"用户名或密码错误",Toast.LENGTH_SHORT).show();	
+				} else if (AppContext.CODE_ACCOUNT_ERR.equals(JSONUtil
+						.getString(response.jSON(), "code"))) {
+					Toast.makeText(LoginActivity.this, "账号异常",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(LoginActivity.this, "用户名或密码错误",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -167,5 +237,5 @@ public class LoginActivity extends BaseActivity{
 		}
 		return false;
 	}
-	
+
 }
